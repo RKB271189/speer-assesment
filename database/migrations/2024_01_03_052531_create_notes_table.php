@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('userid')->unsigned()->index();
-            $table->foreign('userid')->references('id')->on('users')->onDelete('NO ACTION');
+            $table->bigInteger('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('NO ACTION');
             $table->text('content');
             $table->timestamps();
         });
