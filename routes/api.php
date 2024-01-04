@@ -26,9 +26,11 @@ Route::prefix('/auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/notes', [NoteController::class, 'index']);
     Route::get('/notes/{id}', [NoteController::class, 'note']);
-    Route::post('/notes', [NoteController::class, 'save']);
-    Route::put('/notes/{id}', [NoteController::class, 'update']);
-    Route::delete('/notes/{id}', [NoteController::class, 'destroy']);
+    Route::middleware(['throttle:create_notes'])->group(function () {
+        Route::post('/notes', [NoteController::class, 'save']);
+        Route::put('/notes/{id}', [NoteController::class, 'update']);
+        Route::delete('/notes/{id}', [NoteController::class, 'destroy']);
+    });
     Route::post('/notes/{id}/share', [NoteController::class, 'share']);
     Route::get('/notes/search', [NoteController::class, 'search']);
 });
