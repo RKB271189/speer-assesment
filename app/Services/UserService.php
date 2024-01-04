@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 final class UserService extends MainServiceRepository
 {
@@ -11,5 +12,10 @@ final class UserService extends MainServiceRepository
     {
         $this->table = $user;
         parent::__construct($user);
+    }
+    public function newUser(array $params): Collection
+    {
+        $collection = $this->table->create($params);
+        return $collection;
     }
 }
