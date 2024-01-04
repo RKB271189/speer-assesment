@@ -7,7 +7,7 @@ interface MainServiceInterface
 
     public function getAll();
 
-    public function findById($id);
+    public function findById($id): array;
 
     public function save(array $params): array;
 

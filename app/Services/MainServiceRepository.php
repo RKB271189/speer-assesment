@@ -16,7 +16,7 @@ final class MainServiceRepository implements MainServiceInterface
         $collection = $this->model->get();
         return $collection->toArray();
     }
-    public function findById($id)
+    public function findById($id): array
     {
         $collection = $this->model->find($id);
         return ($collection) ? $collection->toArray() : null;
