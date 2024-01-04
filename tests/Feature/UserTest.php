@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+use function PHPUnit\Framework\assertTrue;
+
 class UserTest extends TestCase
 {
     /**
@@ -30,7 +32,7 @@ class UserTest extends TestCase
     {
         $params = [
             'email' => 'test@gmail.com',
-            'password' => 'password'
+            'password' => 'password1'
         ];
         $response = $this->json('POST', 'api/auth/login', $params, ['Accept' => 'application/json']);
         $response->assertStatus(401);
@@ -44,5 +46,15 @@ class UserTest extends TestCase
         ];
         $response = $this->json('POST', 'api/auth/signup', $params, ['Accept' => 'application/json']);
         $response->assertStatus(200);
+    }
+    public function test_unique_user()
+    {
+        $params = [
+            'name' => 'john doe',
+            'email' => 'test@gmail.com',
+            'password' => 'password'
+        ];
+        $response = $this->json('POST', 'api/auth/signup', $params, ['Accept' => 'application/json']);
+        $response->assertStatus(422);
     }
 }

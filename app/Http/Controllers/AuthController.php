@@ -28,7 +28,7 @@ class AuthController extends Controller
                 return response()->json(['message' => 'Invalid credentials'], 401);
             }
         } catch (Exception $ex) {
-            //Write the logs here
+            //Write the logs here            
             return response()->json(['error' => 'Something went wrong. Please try again.'], 500);
         }
     }
@@ -36,10 +36,9 @@ class AuthController extends Controller
     {
         try {
             $params = $request->only(['email', 'password']);
-            $params = $request->only(['email', 'password']);
             if (Auth::attempt($params)) {
                 $user = Auth::user();
-                $token = $user->createToken($user->email);
+                $token = $user->createToken($user->email);                
                 return response()->json(['message' => 'User verified successfully', 'token' => $token->plainTextToken], 200);
             } else {
                 throw new Exception("Unable to verify user");
