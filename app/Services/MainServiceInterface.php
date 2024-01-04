@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 interface MainServiceInterface
 {
 
     public function getAll();
 
-    public function findById($id): ?Collection;
+    public function findById($id): ?Model;
 
     public function save(array $params): array;
 

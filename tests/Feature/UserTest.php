@@ -18,25 +18,7 @@ class UserTest extends TestCase
     //     $response = $this->get('/');
 
     //     $response->assertStatus(200);
-    // }
-    public function test_auth_valid()
-    {
-        $params = [
-            'email' => 'test@gmail.com',
-            'password' => 'password'
-        ];
-        $response = $this->json('POST', 'api/auth/login', $params, ['Accept' => 'application/json']);
-        $response->assertStatus(200);
-    }
-    public function test_auth_invalid()
-    {
-        $params = [
-            'email' => 'test@gmail.com',
-            'password' => 'password1'
-        ];
-        $response = $this->json('POST', 'api/auth/login', $params, ['Accept' => 'application/json']);
-        $response->assertStatus(401);
-    }
+    // }    
     public function test_create_user()
     {
         $params = [
@@ -56,5 +38,23 @@ class UserTest extends TestCase
         ];
         $response = $this->json('POST', 'api/auth/signup', $params, ['Accept' => 'application/json']);
         $response->assertStatus(422);
+    }
+    public function test_auth_valid()
+    {
+        $params = [
+            'email' => 'test@gmail.com',
+            'password' => 'password'
+        ];
+        $response = $this->json('POST', 'api/auth/login', $params, ['Accept' => 'application/json']);
+        $response->assertStatus(200);
+    }
+    public function test_auth_invalid()
+    {
+        $params = [
+            'email' => 'test@gmail.com',
+            'password' => 'password1'
+        ];
+        $response = $this->json('POST', 'api/auth/login', $params, ['Accept' => 'application/json']);
+        $response->assertStatus(401);
     }
 }
