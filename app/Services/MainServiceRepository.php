@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-final class MainServiceRepository implements MainServiceInterface
+class MainServiceRepository implements MainServiceInterface
 {
 
     public function __construct(private Model $model)
