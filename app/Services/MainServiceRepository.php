@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 final class MainServiceRepository implements MainServiceInterface
@@ -16,10 +17,10 @@ final class MainServiceRepository implements MainServiceInterface
         $collection = $this->model->get();
         return $collection->toArray();
     }
-    public function findById($id): array
+    public function findById($id): ?Collection
     {
         $collection = $this->model->find($id);
-        return ($collection) ? $collection->toArray() : null;
+        return ($collection) ? $collection : null;
     }
     public function save(array $params): array
     {

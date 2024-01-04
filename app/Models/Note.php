@@ -13,4 +13,8 @@ class Note extends Model
         'user_id',
         'content'
     ];
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'note_user', 'note_id', 'user_id');
+    }
 }
