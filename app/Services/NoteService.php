@@ -13,4 +13,11 @@ final class NoteService extends MainServiceRepository
         $this->table = $note;
         parent::__construct($this->table);
     }
+    public function filter(string $query): ?array
+    {
+        $collection = $this->table
+            ->where('content', 'like', '%' . $query . '%')
+            ->get();
+        return ($collection) ? $collection->toArray() : null;
+    }
 }
