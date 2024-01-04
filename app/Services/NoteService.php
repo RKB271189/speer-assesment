@@ -15,8 +15,7 @@ final class NoteService extends MainServiceRepository
     }
     public function filter(string $query): ?array
     {
-        $collection = $this->table
-            ->where('content', 'like', '%' . $query . '%')
+        $collection = Note::whereRaw("MATCH(content) AGAINST(? IN BOOLEAN MODE)", [$query])
             ->get();
         return ($collection) ? $collection->toArray() : null;
     }
