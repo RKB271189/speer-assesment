@@ -72,10 +72,10 @@ class NoteController extends Controller
             $userid = $request->input('user_id');
             $note = $this->noteService->findById($id);
             $user = $this->userService->findById($userid);
-            $note->user()->attach($user);
+            $note->users()->attach($user);
             return response()->json(['message' => 'Note shared successfully'], 200);
         } catch (Exception $ex) {
-            //Write the logs here
+            //Write the logs here            
             return response()->json(['error' => 'Something went wrong. Please try again.'], 500);
         }
     }

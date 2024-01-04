@@ -15,6 +15,6 @@ class Note extends Model
     ];
     public function users()
     {
-        return $this->belongsToMany(User::class, 'note_user', 'note_id', 'user_id');
+        return $this->belongsToMany(User::class, 'note_users', 'note_id', 'user_id');
     }
 }

@@ -28,8 +28,7 @@ class CreateNoteRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'user_id' => 'required',
+        return [            
             'content' => 'required',
         ];
     }

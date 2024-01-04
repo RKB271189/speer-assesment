@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Note;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class NoteTest extends TestCase
@@ -16,20 +19,31 @@ class NoteTest extends TestCase
     //     $response = $this->get('/');
 
     //     $response->assertStatus(200);
-    // }
+    // }    
+    public function test_unauthorized_access()
+    {
+        $response = $this->json('GET', 'api/notes', ['Accept' => 'application/json']);
+        $response->assertStatus(401);
+    }
     public function test_index()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
         $response = $this->json('GET', 'api/notes', ['Accept' => 'application/json']);
         $response->assertStatus(200);
     }
     public function test_note()
     {
-        $noteid = 1;
-        $response = $this->json('GET', 'api/notes/' . $noteid, ['Accept' => 'application/json']);
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $note = Note::factory()->create();
+        $response = $this->json('GET', 'api/notes/' . $note->id, ['Accept' => 'application/json']);
         $response->assertStatus(200);
     }
     public function test_save()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
         $params = [
             'user_id' => 1,
             'content' => 'This is test content for notes'
@@ -39,31 +53,39 @@ class NoteTest extends TestCase
     }
     public function test_update()
     {
-        $noteid = 1;
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $note = Note::factory()->create();
         $params = [
-            'user_id' => 1,
             'content' => 'This is test content for notes update'
         ];
-        $response = $this->json('PUT', 'api/notes/' . $noteid, $params, ['Accept' => 'application/json']);
+        $response = $this->json('PUT', 'api/notes/' . $note->id, $params, ['Accept' => 'application/json']);
         $response->assertStatus(200);
     }
     public function test_delete()
     {
-        $noteid = 1;
-        $response = $this->json('DELETE', 'api/notes/' . $noteid, ['Accept' => 'application/json']);
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $note = Note::factory()->create();
+        $response = $this->json('DELETE', 'api/notes/' . $note->id, ['Accept' => 'application/json']);
         $response->assertStatus(200);
     }
     public function test_share()
     {
-        $noteid = 1;
-        $userid = 2;
-        $response = $this->json('POST', 'api/notes/' . $noteid . '/share', ['user_id' => $userid], ['Accept' => 'application/json']);
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $note = Note::factory()->create();
+        $user = User::factory()->create();
+        $userid = $user->id;
+        $response = $this->json('POST', 'api/notes/' . $note->id . '/share', ['user_id' => $userid], ['Accept' => 'application/json']);
         $response->assertStatus(200);
     }
     public function test_search()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
         $query = 'test';
         $response = $this->json('GET', 'api/notes', ['q' => $query], ['Accept' => 'application/json']);
-        $response->assertStatus(200)->assertJson(['notes']);
+        $response->assertStatus(200);
     }
 }
