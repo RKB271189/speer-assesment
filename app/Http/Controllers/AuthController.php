@@ -25,7 +25,7 @@ class AuthController extends Controller
                 $token = $user->createToken($user->email);
                 return response()->json(['message' => 'User created successfully', 'token' => $token->plainTextToken], 200);
             } else {
-                throw new Exception("Unable to create user");
+                return response()->json(['message' => 'Invalid credentials'], 401);
             }
         } catch (Exception $ex) {
             //Write the logs here
