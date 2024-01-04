@@ -13,7 +13,7 @@ final class UserService extends MainServiceRepository
         $this->table = $user;
         parent::__construct($user);
     }
-    public function newUser(array $params): Collection
+    public function createUser(array $params): Collection
     {
         $collection = $this->table->create($params);
         return $collection;
